@@ -1,5 +1,7 @@
 @import './markdown.css';
-
+* {
+  box-sizing: border-box;
+}
 html,
 body,
 #app {
