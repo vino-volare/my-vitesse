@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { saveAs } from 'file-saver'
+interface obj {
+  [prop: string]: any
+}
+
+const header: obj = {
+  'CF-Access-Client-Id': import.meta.env.VITE_CF_ACCESS_CLIENT_ID,
+  'CF-Access-Client-Secret': import.meta.env.VITE_CF_ACCESS_CLIENT_SECRET,
+}
 
 const filename = ref('')
 const string = ref('')
@@ -41,15 +49,50 @@ interface info {
 const jsonBody: info[] = reactive([])
 const getImage = async () => {
   const url = '/api/cloudinary/list'
-  const res = await fetch(url)
+  const init = {
+    headers: header,
+  }
+  const res = await fetch(url, init)
   const data: info[] = await res.json()
   data.map(obj => jsonBody.push(obj))
 }
 onMounted(getImage)
+
+interface body {
+  public_id: string
+  file: string
+}
+const base64Image = ref<string>('')
+const uploadImage = async (e: any) => {
+  const url = '/api/cloudinary/post'
+  const postHeader = header
+  postHeader['content-type'] = 'application/json'
+
+  const reader = new FileReader()
+  const file = e.target.files[0]
+  if (file)
+    reader.readAsDataURL(file)
+  reader.onload = async () => {
+    const body: body = {
+      public_id: file.name.substring(0, file.name.indexOf('.')),
+      file: String(reader.result),
+    }
+    const init = {
+      method: 'POST',
+      headers: postHeader,
+      body: JSON.stringify(body),
+    }
+    const res = await fetch(url, init)
+    const data: info = await res.json()
+    data.filename = data.filename.substring(data.filename.lastIndexOf('/') + 1)
+    jsonBody.unshift(data)
+  }
+}
 </script>
 
 <template>
   <div class="wrapper">
+    <p>{{ base64Image }}</p>
     <input v-model="filename" type="text">
     <textarea ref="mdEditor" v-model="string" />
     <button btn m-3 text-sm @click="saveMd">
@@ -59,6 +102,9 @@ onMounted(getImage)
       insert
     </button>
     <ul v-if="isImage" class="imageList">
+      <label id="fileWrapper" class="imageWrapper">
+        <input type="file" @change="uploadImage">新規
+      </label>
       <li v-for="(detail, i) in jsonBody" :key="i" class="imageWrapper">
         <img :src="detail.secure_url" :alt="detail.filename" class="image" @click="putImage(detail.filename, detail.secure_url)">
       </li>
@@ -82,6 +128,14 @@ onMounted(getImage)
     margin: 10px 5px;
     width: 20vw;
     height: 30vw;
+    cursor: pointer;
+  }
+  #fileWrapper {
+    background-color: aqua;
+    color: black;
+  }
+  #fileWrapper > label {
+    display: none;
   }
   .image {
     position: absolute;

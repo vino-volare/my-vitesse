@@ -35,7 +35,7 @@ interface info {
   secure_url: string
 }
 const postBody = {
-  expression: 'folder=website/static',
+  expression: 'folder=website/article_image',
   max_results: 30,
 }
 const getImage = async (key, secret, cloudName) => {
