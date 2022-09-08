@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { saveAs } from 'file-saver'
 interface obj {
   [prop: string]: any
 }
@@ -9,38 +8,8 @@ const header: obj = {
   'CF-Access-Client-Secret': import.meta.env.VITE_CF_ACCESS_CLIENT_SECRET,
 }
 
-const filename = ref('')
-const string = ref('')
-const saveMd = () => {
-  if (filename.value !== '') {
-    const blob = new Blob([string.value], { type: 'text/markdown' })
-    saveAs(blob, `${filename.value}.md`)
-  }
-}
-const mdEditor = ref(null)
-const index = ref(0)
-const insert = (element: string) => {
-  if (mdEditor.value !== null) {
-    index.value = mdEditor.value.selectionStart
-    let correctText: string
-    const escape = /\N|\n| |\u00A0|\t/
-    if (escape.test(string.value[index.value - 1]) && escape.test(string.value[index.value]))
-      correctText = `${element}`
-    else if (escape.test(string.value[index.value - 1]) || (index.value === 0))
-      correctText = `${element}\u00A0`
-    else
-      correctText = `\u00A0${element}\u00A0`
-    string.value = `${string.value.substring(0, index.value)}${correctText}${string.value.substring(index.value)}`
-  }
-}
-const isImage = ref(false)
-const toggleImage = () => {
-  isImage.value = !isImage.value
-}
-const putImage = (alt: string, url: string) => {
-  const text = `![${alt}](${url})`
-  insert(text)
-  toggleImage()
+const copyImgUrl = (url: string) => {
+  navigator.clipboard.writeText(url)
 }
 interface info {
   secure_url: string
@@ -62,7 +31,6 @@ interface body {
   public_id: string
   file: string
 }
-const base64Image = ref<string>('')
 const uploadImage = async (e: any) => {
   const url = '/api/cloudinary/post'
   const postHeader = header
@@ -92,21 +60,12 @@ const uploadImage = async (e: any) => {
 
 <template>
   <div class="wrapper">
-    <p>{{ base64Image }}</p>
-    <input v-model="filename" type="text">
-    <textarea ref="mdEditor" v-model="string" />
-    <button btn m-3 text-sm @click="saveMd">
-      save
-    </button>
-    <button btn m-3 text-sm @click="toggleImage">
-      insert
-    </button>
-    <ul v-if="isImage" class="imageList">
+    <ul class="imageList">
       <label id="fileWrapper" class="imageWrapper">
-        <input type="file" @change="uploadImage">新規
+        <input type="file" @change="uploadImage"><div i-carbon:folder-add />
       </label>
       <li v-for="(detail, i) in jsonBody" :key="i" class="imageWrapper">
-        <img :src="detail.secure_url" :alt="detail.filename" class="image" @click="putImage(detail.filename, detail.secure_url)">
+        <img :src="detail.secure_url" :alt="detail.filename" class="image" @click="copyImgUrl(detail.secure_url)">
       </li>
     </ul>
   </div>
@@ -114,8 +73,8 @@ const uploadImage = async (e: any) => {
 
 <style scoped>
   .wrapper {
-    display: flex;
-    flex-direction: column;
+    min-height: 100%;
+    flex-grow: 1;
   }
   .imageList {
     display: flex;
@@ -131,11 +90,18 @@ const uploadImage = async (e: any) => {
     cursor: pointer;
   }
   #fileWrapper {
-    background-color: aqua;
-    color: black;
+    background-color: rgb(66, 66, 66);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  #fileWrapper > label {
+  #fileWrapper > input {
     display: none;
+  }
+  #fileWrapper > div {
+    position: absolute;
+    width: 50%;
+    height: 100%;
   }
   .image {
     position: absolute;
@@ -150,5 +116,5 @@ const uploadImage = async (e: any) => {
 
 <route lang="yaml">
 meta:
-  layout: default
+  layout: private
 </route>

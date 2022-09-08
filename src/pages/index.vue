@@ -53,9 +53,6 @@ const { t } = useI18n()
         {{ t('button.go') }}
       </button>
     </div>
-    <RouterLink class="icon-btn mx-2" to="/makeMd" title="makeMd">
-      <div i-carbon-dicom-overlay />
-    </RouterLink>
   </div>
 </template>
 
