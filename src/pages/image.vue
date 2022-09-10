@@ -9,7 +9,10 @@ const header: obj = {
 }
 
 const copyImgUrl = (url: string) => {
-  navigator.clipboard.writeText(url)
+  const index = url.indexOf('upload/') + 7
+  const before = url.substring(0, index)
+  const after = url.substring(index)
+  navigator.clipboard.writeText(`${before}c_scale,w_auto/dpr_auto/${after}`)
 }
 interface info {
   secure_url: string
