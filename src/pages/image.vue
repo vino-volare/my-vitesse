@@ -21,8 +21,15 @@ interface info {
 const jsonBody: info[] = reactive([])
 const getImage = async () => {
   const url = '/api/cloudinary/list'
+  // article_image or static
+  const folder = 'article_image'
+  const postHeader = header
+  postHeader['content-type'] = 'application/json'
+  const body = { folder }
   const init = {
-    headers: header,
+    method: 'POST',
+    headers: postHeader,
+    body: JSON.stringify(body),
   }
   const res = await fetch(url, init)
   const data: info[] = await res.json()

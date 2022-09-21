@@ -34,11 +34,13 @@ interface info {
   filename: string
   secure_url: string
 }
-const postBody = {
-  expression: 'folder=website/article_image',
-  max_results: 30,
-}
-const getImage = async (key, secret, cloudName) => {
+const getImage = async (request, key, secret, cloudName) => {
+  const data = await request.json()
+  const postBody = {
+    // article_image or static
+    expression: `folder=website/${data.folder}`,
+    max_results: 30,
+  }
   const init = {
     body: JSON.stringify(postBody),
     method: 'POST',
@@ -58,8 +60,8 @@ const getImage = async (key, secret, cloudName) => {
   return JSON.stringify(info)
 }
 
-export async function onRequest({ env }) {
+export async function onRequest({ request, env }) {
   // Contents of context object
-  const info = await getImage(env.CLOUDINARY_API_KEY, env.CLOUDINARY_API_SECRET, env.CLOUDINARY_CLOUD_NAME)
+  const info = await getImage(request, env.CLOUDINARY_API_KEY, env.CLOUDINARY_API_SECRET, env.CLOUDINARY_CLOUD_NAME)
   return new Response(info)
 }
