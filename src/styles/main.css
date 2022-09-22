@@ -29,3 +29,6 @@ html.dark {
   width: 100%;
   height: 2px;
 }
+.icon-btn:hover{
+  color: rgba(180,0,0,var(--un-text-opacity))!important;
+}

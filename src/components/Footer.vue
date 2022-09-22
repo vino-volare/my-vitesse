@@ -5,8 +5,8 @@
   <footer>
     <nav text-xl mt-6>
       <RouterLink class="icon-btn mx-2" to="/" title="home">
-        <img v-if="isDark" class="img" src="favicon-dark.svg" alt="home" width="24" height="24">
-        <img v-else class="img" src="favicon.svg" alt="home" width="24" height="24">
+        <img v-if="isDark" class="img" src="https://res.cloudinary.com/tokino/image/upload/v1663830940/website/static/favicon-dark_otzr85.svg" alt="home" width="24" height="24">
+        <img v-else class="img" src="https://res.cloudinary.com/tokino/image/upload/v1663830940/website/static/favicon_qedts8.svg" alt="home" width="24" height="24">
       </RouterLink>
 
       <button class="icon-btn mx-2 !outline-none" title="toggle dark" @click="toggleDark()">

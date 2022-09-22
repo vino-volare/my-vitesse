@@ -60,7 +60,7 @@ const getImage = async (request, key, secret, cloudName) => {
   return JSON.stringify(info)
 }
 
-export async function onRequest({ request, env }) {
+export async function onRequestPost({ request, env }) {
   // Contents of context object
   const info = await getImage(request, env.CLOUDINARY_API_KEY, env.CLOUDINARY_API_SECRET, env.CLOUDINARY_CLOUD_NAME)
   return new Response(info)

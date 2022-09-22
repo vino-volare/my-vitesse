@@ -1,4 +1,9 @@
 <script setup lang="ts">
+const props = defineProps<{
+  home: boolean
+}>()
+const { home } = toRefs(props)
+
 const mobileView = ref(true)
 const windowWidth = ref(0)
 
@@ -19,11 +24,11 @@ const show = ref(false)
     <header>
       <nav class="headerNav" text-xl mt-6>
         <RouterLink to="/" title="home">
-          <img v-if="isDark" class="img" src="favicon-dark.svg" alt="home">
-          <img v-else class="img" src="favicon.svg" alt="home">
+          <img v-if="isDark" class="img" src="https://res.cloudinary.com/tokino/image/upload/v1663830940/website/static/favicon-dark_otzr85.svg" alt="home">
+          <img v-else class="img" src="https://res.cloudinary.com/tokino/image/upload/v1663830940/website/static/favicon_qedts8.svg" alt="home">
         </RouterLink>
         <button v-if="mobileView" class="icon-btn mx-2 !outline-none" @click="show = !show">
-          <div i-carbon:menu text-3xl />
+          <div class="menu" i-carbon:menu text-3xl />
         </button>
         <transition name="slide-fade">
           <div v-if="show || !mobileView" class="navWrapper">
@@ -40,6 +45,7 @@ const show = ref(false)
         </transition>
       </nav>
     </header>
+    <img v-if="home" src="https://res.cloudinary.com/tokino/image/upload/v1653030180/website/static/%E3%81%B0%E3%81%A3%E3%81%A6%E3%82%93%E6%98%9F%E5%B7%9D_%E5%AE%8C%E6%88%90%E5%93%81_%E8%89%B2%E5%8F%8E%E5%B7%AEver_wgxmcn.png" alt="header">
   </div>
 </template>
 
@@ -50,14 +56,25 @@ const show = ref(false)
     left: 0;
     height: 100px;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
     padding: 8px;
+    z-index: 1;
   }
   .headerNav {
     display: flex;
     justify-content: space-between;
     height: 100%;
     margin: 0;
+  }
+  .headerNav::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
   }
   .img {
     height: 100%;
@@ -72,10 +89,11 @@ const show = ref(false)
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    z-index: -1;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+    backdrop-filter: blur(20px);
   }
   .space {
-    height: 100px;
+    padding-top: 100px;
   }
   .slide-fade-enter-active,
   .slide-fade-leave-active {
@@ -97,10 +115,16 @@ const show = ref(false)
       flex-direction: row;
       align-items: center;
       z-index: 0;
+      background: none;
     }
     .slide-fade-enter-active,
     .slide-fade-leave-active {
       transition: none;
     }
+  }
+  @media screen and (max-Width:767px) {
+/*     .navWrapper {
+      color: aqua;
+    } */
   }
 </style>
