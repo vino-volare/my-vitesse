@@ -9,5 +9,5 @@ node_modules
 *.log
 *.vars
 .env
-function
+functions
 pages/pages/image.vue
