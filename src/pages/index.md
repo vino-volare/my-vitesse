@@ -2,10 +2,7 @@
 title: TokinoVino
 ---
 
-# TokinoVino
-アマチュアイラストレーター
-
-## social
+<h2 class="title">SOCIAL</h2>
 
 <Social />
 
@@ -14,3 +11,9 @@ title: TokinoVino
 meta:
   layout: home
 </route>
+
+<style scoped>
+  .title {
+    font-family: Formula1-Bold;
+  }
+</style>

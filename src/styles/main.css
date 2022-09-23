@@ -2,6 +2,14 @@
 * {
   box-sizing: border-box;
 }
+@font-face {
+  font-family: 'Formula1-Bold';
+  src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Formula1-Wide';
+  src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Wide.ttf') format('truetype');
+}
 html,
 body,
 #app {

@@ -23,5 +23,8 @@
         <div i-carbon-logo-github />
       </a>
     </nav>
+    <small class="mt-5 mx-auto text-center opacity-75 dark:opacity-50 text-sm">
+      &copy; 2022 TokinoVino
+    </small>
   </footer>
 </template>

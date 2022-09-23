@@ -1,6 +1,12 @@
 <script setup lang="ts">
 const router = useRouter()
 const { t } = useI18n()
+useHead({
+  title: 'Page not found',
+  meta: [
+    { name: 'robots', content: 'noindex,nofollow' },
+  ],
+})
 </script>
 
 <template>

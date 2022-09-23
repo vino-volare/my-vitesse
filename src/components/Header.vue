@@ -45,7 +45,13 @@ const show = ref(false)
         </transition>
       </nav>
     </header>
-    <img v-if="home" src="https://res.cloudinary.com/tokino/image/upload/v1653030180/website/static/%E3%81%B0%E3%81%A3%E3%81%A6%E3%82%93%E6%98%9F%E5%B7%9D_%E5%AE%8C%E6%88%90%E5%93%81_%E8%89%B2%E5%8F%8E%E5%B7%AEver_wgxmcn.png" alt="header">
+    <div v-if="home" class="home">
+      <img class="headerImg" src="https://res.cloudinary.com/tokino/image/upload/v1653030180/website/static/%E3%81%B0%E3%81%A3%E3%81%A6%E3%82%93%E6%98%9F%E5%B7%9D_%E5%AE%8C%E6%88%90%E5%93%81_%E8%89%B2%E5%8F%8E%E5%B7%AEver_wgxmcn.png" alt="header">
+      <h1 class="title">
+        <span class="titleText" text-xl>TokinoVino</span>
+        <img class="titleImg" src="https://res.cloudinary.com/tokino/image/upload/v1663896094/website/static/TokinoVino_word_only_skdbu8.svg" alt="TokinoVino">
+      </h1>
+    </div>
   </div>
 </template>
 
@@ -79,6 +85,9 @@ const show = ref(false)
   .img {
     height: 100%;
   }
+  .menu {
+    color: white !important;
+  }
   .navWrapper {
     position: fixed;
     right: 0;
@@ -91,6 +100,7 @@ const show = ref(false)
     align-items: flex-end;
     background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
     backdrop-filter: blur(20px);
+    color: white !important;
   }
   .space {
     padding-top: 100px;
@@ -103,6 +113,34 @@ const show = ref(false)
   .slide-fade-leave-to {
     transform: translateX(25vw);
     opacity: 0;
+  }
+  .home {
+    position: relative;
+    height: fit-content;
+    display: block;
+  }
+  .headerImg {
+    object-fit: cover;
+    overflow: hidden;
+    z-index: -1;
+  }
+  .title {
+    padding-top: 16px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+    width: 100%;
+  }
+  .titleText {
+    font-family: Formula1-Wide;
+    color: black !important;
+  }
+  .titleImg {
+    padding: 16px;
+    padding-top: 4px;
   }
   @media screen and (min-Width:768px) {
     .navWrapper {
@@ -121,10 +159,5 @@ const show = ref(false)
     .slide-fade-leave-active {
       transition: none;
     }
-  }
-  @media screen and (max-Width:767px) {
-/*     .navWrapper {
-      color: aqua;
-    } */
   }
 </style>
