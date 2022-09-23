@@ -10,4 +10,4 @@ node_modules
 *.vars
 .env
 functions
-pages/pages/image.vue
+src/pages/image.vue
