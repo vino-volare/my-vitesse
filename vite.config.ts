@@ -13,7 +13,6 @@ import Inspect from 'vite-plugin-inspect'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import Shiki from 'markdown-it-shiki'
-import RespImg from './md-plugin/resp-img'
 
 export default defineConfig({
   resolve: {
@@ -87,7 +86,6 @@ export default defineConfig({
             rel: 'noopener',
           },
         })
-        md.use(RespImg)
       },
     }),
 
